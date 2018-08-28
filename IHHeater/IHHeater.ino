@@ -26,99 +26,11 @@ int  automaticTemp = 0; // 0 manual ; 1 Automatic
 int waitForSecondClick = 3000;
 int calibrationRun = 1; // Are we in the initial loop of the Automatic mode where we "record" the heat temp.
 unsigned long pushedTime = 0; // How lon the heater has been on
-
-
-void TurnHeaterOff()
-{
-  digitalWrite(MOSFET_pin, LOW);
-
-  pushPower = 0;
-  pushedTime = 0;
-
-}
-
-void TurnHeaterOn()
-{
-  if (!safetyReached)
-  {
-    digitalWrite(MOSFET_pin, HIGH);
-  }
-  else
-  {
-    digitalWrite(MOSFET_pin, LOW);
-  }
-
-  pushPower = 1;
-  pushedTime = millis();
-
-}
-
-
-int increase = 1;
-int intensity = 0;
-unsigned long timeSinceBlink = 0;
-void sleepColor(char color = 'w', int colorChange = 1, int blinkDelay = 0)
-{
-  unsigned long span = millis() - timeSinceBlink;
-  if (span > blinkDelay)
-  {
-    timeSinceBlink = millis();
-  }
-  else
-  {
-    return;
-  }
-
-  if (increase)
-  {
-    if (intensity == 200)
-    {
-      increase = 0;
-    }
-    else
-    {
-      intensity = intensity + colorChange;
-    }
-  }
-  else
-  {
-    if (intensity == 0)
-    {
-      increase = 1;
-    }
-    else
-    {
-      intensity = intensity - colorChange;
-    }
-  }
-  if (color == 'w')
-  {
-    analogWrite(redpin, intensity);
-    analogWrite(greenpin, intensity);
-    analogWrite(bluepin, intensity);
-  }
-  else if (color == 'r')
-  {
-    analogWrite(redpin, intensity);
-    analogWrite(greenpin, 0);
-    analogWrite(bluepin, 0);
-  }
-  else if (color == 'g')
-  {
-    analogWrite(redpin, 0);
-    analogWrite(greenpin, intensity);
-    analogWrite(bluepin, 0);
-  }
-  else if (color == 'b')
-  {
-    analogWrite(redpin, 0);
-    analogWrite(greenpin, 0 );
-    analogWrite(bluepin, intensity);
-  }
-}
-
-
+int increase = 1; // How much to increase the LED color on each cycle
+int intensity = 0; // How bright the color is
+unsigned long timeSinceBlink = 0; 
 unsigned long currentMillis = 0;
+
 void setup()
 {
   pinMode(SW_pin, INPUT_PULLUP);
@@ -367,69 +279,5 @@ void automaticMode()
     Serial.println("Pushed OFF");
     TurnHeaterOff();
     delay(400);
-  }
-}
-
-
-
-void colorTest()
-{
-  String input = Serial.readString();
-
-  int r = 0;
-  int b = 0;
-  int g = 0;
-
-
-  while (colortest || input == "c")
-  {
-    input = Serial.readString();
-    Serial.print(input);
-
-    if (input == "r")
-    {
-      r = r - 5;
-    }
-    else if (input == "b")
-    {
-      b = b - 5;
-    }
-    else if (input == "g")
-    {
-      g = g - 5;
-    }
-    if (input == "rr")
-    {
-      Serial.print("Adding red");
-      r = r + 5;
-    }
-    else if (input == "bb")
-    {
-      b = b + 5;
-    }
-    else if (input == "gg")
-    {
-      g = g + 5;
-    }
-    else if (input == "?")
-    {
-      String valuered = "Values: R:";
-      String valueblue = " B:";
-      String valuegreen = " G:";
-
-      Serial.println(valuered + r + valueblue + b + valuegreen + g);
-    }
-    else if (input == "x")
-    {
-      colortest = 0;
-    }
-    else if (input == "c")
-    {
-      colortest = 1;
-    }
-
-    analogWrite(redpin, r);
-    analogWrite(greenpin, g);
-    analogWrite(bluepin, b);
   }
 }
