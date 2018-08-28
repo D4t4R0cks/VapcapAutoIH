@@ -28,17 +28,16 @@ int calibrationRun = 1; // Are we in the initial loop of the Automatic mode wher
 unsigned long pushedTime = 0; // How lon the heater has been on
 
 
-void TurnHeaterOff(bool resetPowerState = true)
+void TurnHeaterOff()
 {
   digitalWrite(MOSFET_pin, LOW);
-  if (resetPowerState)
-  {
-    pushPower = 0;
-    pushedTime = 0;
-  } 
+
+  pushPower = 0;
+  pushedTime = 0;
+
 }
 
-void TurnHeaterOn(bool resetPowerState = true)
+void TurnHeaterOn()
 {
   if (!safetyReached)
   {
@@ -49,11 +48,9 @@ void TurnHeaterOn(bool resetPowerState = true)
     digitalWrite(MOSFET_pin, LOW);
   }
 
-  if (resetPowerState)
-  {
-    pushPower = 1;
-    pushedTime = millis();
-  }
+  pushPower = 1;
+  pushedTime = millis();
+
 }
 
 
