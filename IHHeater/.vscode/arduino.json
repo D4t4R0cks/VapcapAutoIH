@@ -1,0 +1,6 @@
+{
+    "board": "arduino:avr:nano",
+    "port": "COM5",
+    "sketch": "IHHeater.ino",
+    "configuration": "cpu=atmega328"
+}

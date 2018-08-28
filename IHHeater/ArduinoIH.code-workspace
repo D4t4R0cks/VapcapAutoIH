@@ -1,0 +1,21 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	
+	"settings": {
+		"C_Cpp.default.includePath": 
+		[
+			"C:\\Arduino\\libraries",
+			"C:\\Arduino",
+			"C:\\Arduino\\libraries\\TempSensor\\SparkFunMLX90614.h",
+			"C:\\Arduino\\hardware\\arduino\\avr\\libraries\\Wire\\src",
+			"C:\\Arduino\\hardware\tools\\avr\\avr\\include\\",
+			"C:\\Arduino\\hardware\tools\\avr\\avr\\include\\avr",
+			"C:\\Arduino\\hardware\tools"
+	
+		] 
+	}
+}
