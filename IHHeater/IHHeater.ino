@@ -31,6 +31,9 @@ int intensity = 0; // How bright the color is
 unsigned long timeSinceBlink = 0; 
 unsigned long currentMillis = 0;
 
+// Function prototype otherwise it won't compile if the file is in another tab
+void sleepColor(char color = 'w', int colorChange = 1, int blinkDelay = 0);
+
 void setup()
 {
   pinMode(SW_pin, INPUT_PULLUP);
@@ -103,8 +106,8 @@ void setup()
 }
 
 
-double temp;
-double tempA;
+double objectTemp;
+double sensorTemp;
 int releaseTemp = 200;
 void readTemp()
 {
@@ -112,18 +115,18 @@ void readTemp()
   int blue = 0;
   int green = 0;
 
-  temp = mlx.readObjectTempF();
-  tempA = mlx.readAmbientTempF();
+  objectTemp = mlx.readObjectTempF();
+  sensorTemp = mlx.readAmbientTempF();
 
   Serial.println("F");
 
-  if (automaticTemp && (temp > releaseTemp) )
+  if (automaticTemp && (objectTemp > releaseTemp) )
   {
     Serial.println("AUTO OFF!");
     delay(2000);
     TurnHeaterOff();
   }
-  else if (temp > 195)
+  else if (objectTemp > 195)
   {
     red = 200;
     Serial.println("EMERGENCY MAX TEMP OFF!");
@@ -131,33 +134,33 @@ void readTemp()
     safetyReached = 1;
   }
 
-  else if (temp > 156 && temp < 174)
+  else if (objectTemp > 156 && objectTemp < 174)
   {
     red = 100;
     Serial.println("High");
   }
 
-  else if (temp > 136 && temp < 156)
+  else if (objectTemp > 136 && objectTemp < 156)
   {
     red = 100;
     green = 70;
     Serial.println("Med");
   }
 
-  else if (temp > 116 && temp < 136)
+  else if (objectTemp > 116 && objectTemp < 136)
   {
     red = 50;
     green = 50;
     Serial.println("Med");
   }
 
-  else if (temp < 116 && temp > (tempA + 10))
+  else if (objectTemp < 116 && objectTemp > (sensorTemp + 10))
   {
     blue = 50;
     Serial.println("Low");
   }
 
-  else if (temp < tempA + 10 || temp > tempA - 10)
+  else if (objectTemp < sensorTemp + 10 || objectTemp > sensorTemp - 10)
   {
     green = 50 ;
     Serial.println("Low");
@@ -166,15 +169,15 @@ void readTemp()
 
   //Serial.println("Object:");
   //Serial.print("100,110,120,130,140,150,160,170,180,");
-  Serial.print(temp);
+  Serial.print(objectTemp);
   //Serial.println("Ambient:");
   Serial.print(",");
-  Serial.print(tempA);
+  Serial.print(sensorTemp);
   Serial.print(",");
   Serial.println(releaseTemp);
 
 
-  if (tempA > 117)
+  if (sensorTemp > 117)
   {
     Serial.println("AMBIENT EMERGENCY OFF!");
     TurnHeaterOff();
