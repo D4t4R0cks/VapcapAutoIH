@@ -3,6 +3,70 @@ void BothModes()
   
 }
 
+
+
+void SetupManualOrAutomaticMode()
+{
+
+  int awaitingCommand = 1;
+  automaticTemp = 0;
+  int sw;
+
+  unsigned long delayBetweenPush = 0;
+
+  int firstClick = 0;
+  while (awaitingCommand)
+  {
+
+    if (!firstClick)
+    {
+      sleepColor('w', 1, 5);
+    }
+    else
+    {
+      sleepColor('g');
+    }
+
+    sw = digitalRead(SW_pin);
+    //Serial.println("In Loop");
+
+    if (!firstClick && sw == LOW)
+    {
+      Serial.println("First Push");
+      automaticTemp = 0;
+      firstClick = 1;
+      currentMillis = millis();
+      delay(400);
+    }
+    if (firstClick)
+    {
+      unsigned long span = millis() - currentMillis;
+
+      if (span < waitForSecondClick)
+      {
+        sw = digitalRead(SW_pin);
+        if (sw == LOW)
+        {
+          automaticTemp = 1;
+          awaitingCommand = 0;
+          break;
+        }
+      }
+      else
+      {
+        awaitingCommand = 0;
+      }
+    }
+  }
+
+  Serial.print("Mode is:");
+  Serial.println(automaticTemp);
+  delay(1000);
+  currentMillis = millis();  
+  
+  
+}
+
 void ManualOrAutomaticMode()
 {
 
