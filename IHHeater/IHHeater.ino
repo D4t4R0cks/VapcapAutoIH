@@ -24,7 +24,7 @@ int maxsafetyTime = 15000; // How long the heater can remain on
 int colortest = 0;     // 0 regular funciton  ; 1 test RGB
 int  automaticTemp = 0; // 0 manual ; 1 Automatic
 int waitForSecondClick = 3000;
-int calibrationRun = 1; // Are we in the initial loop of the Automatic mode where we "record" the heat temp.
+int calibrationRun = 0; // Are we in the initial loop of the Automatic mode where we "record" the heat temp. Turn to 1 for ManualOrAutomatic Mode
 unsigned long pushedTime = 0; // How lon the heater has been on
 int increase = 1; // How much to increase the LED color on each cycle
 int intensity = 0; // How bright the color is
@@ -51,7 +51,7 @@ void setup()
 
   Serial.print("All init");
 
-  SetupManualOrAutomaticMode(1);
+  //SetupManualOrAutomaticMode(1); This has to be enabled for ManualOrAutomaticMode();
 }
 
 
@@ -80,7 +80,7 @@ void manualMode()
     TurnHeaterOff();
   
     releaseTemp =  mlx.readObjectTempF();;
-    calibrationRun = 0;
+    calibrationRun = 0; 
     Serial.println("Setting Max Temp");
     Serial.println("Temp:" + releaseTemp);
    
