@@ -32,7 +32,7 @@ unsigned long timeSinceBlink = 0;
 unsigned long currentMillis = 0;
 double objectTemp; // Temperature of the object infront of sensor
 double sensorTemp; // Ambient Temperature, or temperature of the sensor itself.
-int releaseTemp = 180; // Default releasing temperature if no calibration run has happened.
+int releaseTemp = 120; // Default releasing temperature if no calibration run has happened.
 
 // Function prototype otherwise it won't compile if the file is in another tab
 void sleepColor(char color = 'w', int colorChange = 1, int blinkDelay = 0);

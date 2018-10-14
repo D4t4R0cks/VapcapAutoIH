@@ -5,7 +5,7 @@ void SetupManualOrAutomaticMode(int firstModeAutomatic)
   int sw;
   if(!firstModeAutomatic)
   {
-    waitForSecondClick = 2000;
+    waitForSecondClick = 1000;
   }
 
   unsigned long delayBetweenPush = 0;
