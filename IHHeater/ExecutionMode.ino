@@ -1,16 +1,12 @@
-void BothModes()
+void SetupManualOrAutomaticMode(int firstModeAutomatic)
 {
-  
-}
-
-
-
-void SetupManualOrAutomaticMode()
-{
-
   int awaitingCommand = 1;
   automaticTemp = 0;
   int sw;
+  if(!firstModeAutomatic)
+  {
+    waitForSecondClick = 2000;
+  }
 
   unsigned long delayBetweenPush = 0;
 
@@ -60,12 +56,34 @@ void SetupManualOrAutomaticMode()
   }
 
   Serial.print("Mode is:");
+  
+  if(!firstModeAutomatic)
+  {
+    automaticTemp = 1 - automaticTemp;
+  }
+  
   Serial.println(automaticTemp);
   delay(1000);
-  currentMillis = millis();  
-  
-  
+  currentMillis = millis(); 
 }
+
+void BothModes()
+{
+    if(!pushPower)
+    {
+      SetupManualOrAutomaticMode(0);
+    }  
+
+    //Remeber automaticTemp got switched around for calling SetupManualOrAutomaticMode with 0
+     if(automaticTemp)
+    {
+      TurnHeaterOn();
+    }
+    
+    ManualOrAutomaticMode();
+    
+}
+
 
 void ManualOrAutomaticMode()
 {

@@ -51,14 +51,15 @@ void setup()
 
   Serial.print("All init");
 
-  SetupManualOrAutomaticMode();
+  SetupManualOrAutomaticMode(1);
 }
 
 
 void loop()
 {
   // colorTest(); // This is the mode for testing RGB values from the serial monitor
-  ManualOrAutomaticMode();
+  //ManualOrAutomaticMode();
+  BothModes();
 }
 
 
@@ -77,13 +78,12 @@ void manualMode()
     Serial.println(sw);
     Serial.println("Pushed OFF");
     TurnHeaterOff();
-    if (calibrationRun)
-    {
-      releaseTemp =  mlx.readObjectTempF();;
-      calibrationRun = 0;
-      Serial.println("Calibration Mode OFF");
-      Serial.println("Temp:" + releaseTemp);
-    }
+  
+    releaseTemp =  mlx.readObjectTempF();;
+    calibrationRun = 0;
+    Serial.println("Setting Max Temp");
+    Serial.println("Temp:" + releaseTemp);
+   
     delay(400);
   }
 }
