@@ -37,7 +37,6 @@ void readTemp()
   if (automaticTemp && (objectTemp > releaseTemp) )
   {
     Serial.println("AUTO OFF!");
-    delay(2000);
     TurnHeaterOff();
   }
   else if (objectTemp > 195)

@@ -63,7 +63,6 @@ void SetupManualOrAutomaticMode(int firstModeAutomatic)
   }
   
   Serial.println(automaticTemp);
-  delay(1000);
   currentMillis = millis(); 
 }
 
@@ -74,7 +73,7 @@ void BothModes()
       SetupManualOrAutomaticMode(0);
     }  
 
-    //Remeber automaticTemp got switched around for calling SetupManualOrAutomaticMode with 0
+    //Remember automaticTemp got switched around for calling SetupManualOrAutomaticMode with 0
      if(automaticTemp)
     {
       TurnHeaterOn();
